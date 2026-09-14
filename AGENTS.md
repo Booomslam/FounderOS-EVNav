@@ -103,7 +103,7 @@ mock connector is not SANDBOX_EXTERNAL. An automated assertion is not MANUAL.
 
 After Founder approval of FOS-000:
 
-`TASKS.md -> canonical Issue -> branch -> implementation -> tests -> PR -> CI / E2E / evidence -> review -> Issue DONE`
+`TASKS.md -> canonical Issue -> claim -> branch -> implementation -> tests -> PR -> evidence -> review -> Issue DONE`
 
 Issue titles retain the canonical ID, for example:
 
@@ -112,6 +112,24 @@ Issue titles retain the canonical ID, for example:
 GitHub Issues are active execution trackers. `TASKS.md` remains the master
 backlog and dependency map. Do not create competing Issues for one FOS task
 unless an approved decomposition preserves the parent relationship.
+
+Before implementation starts, the agent must claim the canonical Issue by
+completing all of these actions:
+
+1. Add the Issue to the `FounderOS-EVNav` GitHub Project.
+2. Assign the Issue to `Booomslam`, the accountable human owner.
+3. Set the Project `Status` field to `In progress`.
+4. Add a claim comment naming the working agent and task branch.
+5. Set the task lifecycle in `TASKS.md` to `IN_PROGRESS`.
+
+Creating a branch or opening a PR does not claim the Issue and does not move a
+Project item to `In progress`. Do not edit implementation files until the
+assignee, Project status, claim comment, and `TASKS.md` status are synchronized.
+
+Keep the Project item in `In progress` while the task lifecycle is
+`IN_PROGRESS`, `REVIEW`, or `BLOCKED`. Before closing the Issue, confirm that
+all required verification has passed and set `TASKS.md` to `DONE`. Closing the
+Issue may then allow Project automation to move the item to `Done`.
 
 ## 9. Pull Request rules
 

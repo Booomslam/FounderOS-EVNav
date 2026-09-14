@@ -70,11 +70,21 @@ Default execution:
 1. Read `AGENTS.md` and the canonical Issue.
 2. Read linked requirements, architecture, security, tests, and dependencies.
 3. Inspect current source and concurrent work.
-4. Implement only approved scope on the task branch.
-5. Run required tests and collect redacted evidence.
-6. Open or update the Issue-linked PR.
-7. Update independent task, implementation, and verification states.
-8. Stop at the requested review point. Do not start the next task automatically.
+4. Add the Issue to the `FounderOS-EVNav` Project and assign it to `Booomslam`.
+5. Set Project `Status` to `In progress`, add a claim comment naming the agent
+   and task branch, and set the task lifecycle here to `IN_PROGRESS`.
+6. Implement only approved scope on the task branch.
+7. Run required tests and collect redacted evidence.
+8. Open or update the Issue-linked PR and set the task lifecycle to `REVIEW`
+   when it is ready for review. The Project item remains `In progress`.
+9. Update independent task, implementation, and verification states.
+10. Set the task to `DONE` only after all required verification passes, then
+    close the Issue so Project automation can move the item to `Done`.
+11. Stop at the requested review point. Do not start the next task automatically.
+
+An Issue is not claimed merely because a branch or PR exists. Implementation
+must not begin while the Issue is unassigned, the Project item is still
+`Todo`, the claim comment is missing, or this file is not `IN_PROGRESS`.
 
 Traceability: `OBJ -> FEAT -> REQ / SEC -> AC -> TC -> FOS TASK -> Issue -> PR -> evidence`.
 
@@ -82,7 +92,10 @@ Traceability: `OBJ -> FEAT -> REQ / SEC -> AC -> TC -> FOS TASK -> Issue -> PR -
 
 Title: `FOS-NNN - Task title`
 
-Required sections: Objective; Why; Dependencies and status; Scope; Out of Scope; Affected Areas; Acceptance Criteria with AC IDs; Required Tests with TC IDs; Required Verification; Security Considerations with SEC IDs; Evidence Required; Implementation Status; Verification Status; Blockers.
+Required metadata: Assignee `Booomslam`; `FounderOS-EVNav` Project; Project
+`Status` set to `In progress` when claimed.
+
+Required sections: Objective; Why; Dependencies and status; Scope; Out of Scope; Affected Areas; Acceptance Criteria with AC IDs; Required Tests with TC IDs; Required Verification; Security Considerations with SEC IDs; Evidence Required; Claim Record with agent and branch; Implementation Status; Verification Status; Blockers.
 
 One task has one canonical Issue unless an explicitly approved decomposition preserves the parent ID. The Issue is the execution tracker, while this file remains the canonical backlog and dependency map.
 
