@@ -10,9 +10,10 @@ Follow this sequence:
 
 `AGENTS.md -> owning GitHub Issue -> linked REQ / SEC / AC / TC -> dependency check -> implementation -> verification -> evidence -> PR / review`
 
-FOS-000 has no GitHub Issue by design. After FOS-000 receives Founder manual
-approval and task migration begins, active implementation work must normally
-be driven by one canonical GitHub Issue retaining its FOS task ID.
+Every FOS task has one canonical GitHub Issue retaining its FOS task ID.
+FOS-000 and FOS-001 are closed historical records. All remaining tasks stay
+open in the `FounderOS-EVNav` GitHub Project until their completion conditions
+are satisfied.
 
 ## 2. Source-of-truth hierarchy
 
@@ -24,9 +25,10 @@ be driven by one canonical GitHub Issue retaining its FOS task ID.
 - `SECURITY_MODEL.md`: identities, trust boundaries, data sensitivity,
   action levels, permissions, approvals, and security invariants.
 - `TEST_PLAN.md`: test cases, verification environments, and required evidence.
-- `TASKS.md`: canonical backlog, dependency graph, task metadata, status, and
-  Issue/PR references.
-- GitHub Issue: active execution tracker for one FOS task.
+- `TASKS.md`: canonical task definition, dependency graph, metadata, and
+  Issue/PR index.
+- GitHub Issue and its Project `Status`: operational source of task status,
+  ownership, claim record, evidence, and blockers.
 - Pull Request: implementation and review unit linked to the owning Issue.
 
 When sources conflict:
@@ -35,7 +37,9 @@ When sources conflict:
 2. Security invariants must never be weakened silently.
 3. Product changes require an update to `PRODUCT_SPEC.md`.
 4. Architecture changes require an update to `ARCHITECTURE.md`.
-5. Execution must remain consistent with both the owning Issue and `TASKS.md`.
+5. GitHub Project `Status` wins for current operational status. Synchronize
+   `TASKS.md` promptly when its lifecycle snapshot differs.
+6. Execution must remain consistent with both the owning Issue and `TASKS.md`.
 
 ## 3. Required pre-work procedure
 
@@ -43,7 +47,7 @@ Before modifying production code:
 
 1. Read root `AGENTS.md`.
 2. Identify the owning FOS task.
-3. Read the canonical GitHub Issue when one exists.
+3. Read the canonical GitHub Issue.
 4. Read the linked REQ, SEC, AC, and TC entries.
 5. Verify every mandatory dependency.
 6. Inspect the existing implementation and current git state.
@@ -130,6 +134,12 @@ Keep the Project item in `In progress` while the task lifecycle is
 `IN_PROGRESS`, `REVIEW`, or `BLOCKED`. Before closing the Issue, confirm that
 all required verification has passed and set `TASKS.md` to `DONE`. Closing the
 Issue may then allow Project automation to move the item to `Done`.
+
+Keep implementation changes local during active work and commit small
+checkpoints. After the task's required LOCAL verification passes, push that
+task branch and create or update its PR. Do not combine unrelated tasks in one
+push, branch, or PR. Do not push partially verified task work unless the
+Founder explicitly requests it.
 
 ## 9. Pull Request rules
 
@@ -232,12 +242,13 @@ Documentation and verified runtime behavior must not silently diverge.
 Unless explicitly instructed otherwise, work on one FOS task at a time. When
 it reaches the requested review point, stop. Do not begin the next ready task.
 
-## 17. FOS-000 special rule
+## 17. FOS-000 historical rule
 
 FOS-000 establishes documentation and project control only. Product runtime
 implementation is forbidden. FOS-000 cannot become DONE until all six control
 documents exist, cross-document and traceability validation pass, and Founder
-MANUAL approval is recorded.
+MANUAL approval is recorded. Its closed canonical Issue is the retrospective
+record for that completed work.
 
 ## Non-negotiables
 
