@@ -18,7 +18,7 @@ Issue and PR values remain blank until created. `-` means none exists.
 | Task | Title / objective | Dependencies | REQ / AC / TC | Environments | Affected areas | Task | Implementation | Verification | Issue | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
 | FOS-000 | Establish approved project-control documents and GitHub workflow | None | REQ-020 / AC-020 / TC-020 | LOCAL, MANUAL | Six control docs | DONE | IMPLEMENTED | FULLY_VERIFIED | - | - |
-| FOS-001 | Pin supported Node 22 runtime | FOS-000 | REQ-018 / AC-018 / TC-018 | LOCAL, CI | package/runtime docs | BLOCKED | IMPLEMENTED | PARTIALLY_VERIFIED | #1 | #2 |
+| FOS-001 | Pin supported Node 22 runtime | FOS-000 | REQ-018 / AC-018 / TC-018 | LOCAL, CI | package/runtime docs | REVIEW | IMPLEMENTED | FULLY_VERIFIED | #1 | #2 |
 | FOS-002 | Add baseline CI gates | FOS-001 | REQ-018, REQ-020 / AC-018, AC-020 / TC-018, TC-020 | CI | workflows/scripts | BACKLOG | NOT_STARTED | NOT_VERIFIED | - | - |
 | FOS-003 | Triage dependency advisories and secret exposure | FOS-001, FOS-002 | REQ-017, REQ-018 / AC-017, AC-018 / TC-017, TC-018 | LOCAL, CI | dependencies/connectors | BACKLOG | NOT_STARTED | NOT_VERIFIED | - | - |
 | FOS-004 | Add human identity and company scope | FOS-002, FOS-003 | REQ-006 / AC-006 / TC-006 | LOCAL, CI, E2E | auth/schema/repos/routes | BACKLOG | NOT_STARTED | NOT_VERIFIED | - | - |
@@ -93,4 +93,4 @@ Every implementation PR references its FOS task and Issue, describes scope and a
 ## 7. Task evidence summaries
 
 - FOS-000: LOCAL structural validation passed for six control documents, 20 REQ, 20 AC, 20 TC, 20 SEC, 35 tasks, allowed states, and an acyclic dependency graph. Founder MANUAL approval was received on 2026-09-14. No Issue or PR exists by design.
-- FOS-001: Dependency FOS-000 is DONE. GitHub Issue #1 and PR #2 are canonical. LOCAL passed on Node v22.23.2: clean `npm ci`, 111 test files and 963 tests, `npm run typecheck`, and `npm run build` with 24 static pages. Node 26 install was rejected with `EBADENGINE`. Implementation is complete. CI is blocked because GitHub Actions reports zero registered workflows and manual dispatch cannot find `ci.yml`, although the file exists on `main`. CI activation or workflow registration must be resolved without silently implementing FOS-002.
+- FOS-001: Dependency FOS-000 is DONE. GitHub Issue #1 and PR #2 are canonical. LOCAL passed on Node v22.23.2: clean `npm ci`, 111 test files and 963 tests, `npm run typecheck`, and `npm run build` with 24 static pages. Node 26 install was rejected with `EBADENGINE`. CI run 34826328734 passed install, tests, typecheck, and build on commit `df90829`. Implementation and required verification are complete; task remains REVIEW until PR review and merge disposition.
