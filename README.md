@@ -20,9 +20,11 @@ you explore and run it yourself.
 
 ## Quick start
 
-Requires **Node 18+**.
+Requires **Node 22.x**. The repository pins Node 22 in `.nvmrc`, declares it
+in `package.json`, and rejects unsupported Node versions during npm installs.
 
 ```bash
+nvm use
 npm install
 cp .env.example .env.local   # optional; only needed to wire live integrations
 npm run dev                  # http://localhost:4100
