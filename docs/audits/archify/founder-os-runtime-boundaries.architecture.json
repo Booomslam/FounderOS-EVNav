@@ -1,0 +1,189 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "FounderOS Verified Runtime Boundaries",
+    "quality_profile": "showcase",
+    "viewBox": [1390, 650],
+    "repository": {
+      "url": "https://github.com/Booomslam/FounderOS-EVNav.git",
+      "provider": "github",
+      "link_mode": "local-only",
+      "revision": "d5e565ea1ee82069e17cd176a33c2f272619e002"
+    },
+    "views": [
+      {
+        "id": "agent-run",
+        "label": "Agent run path",
+        "focus": ["ui", "api", "agentRuntime", "llm", "sqlite"],
+        "note": "Trace an interactive agent request and its persisted run record."
+      },
+      {
+        "id": "knowledge",
+        "label": "Knowledge path",
+        "focus": ["ui", "api", "gbrain", "brainStore", "sqlite"],
+        "note": "Separate external G-Brain search from FounderOS local records."
+      },
+      {
+        "id": "integrations",
+        "label": "Connector boundary",
+        "focus": ["api", "connectors", "externalServices"],
+        "note": "Connector presence is structural evidence, not proof of configured service access."
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "founder",
+      "type": "external",
+      "label": "Founder / Browser",
+      "sublabel": "Next.js UI client",
+      "pos": [40, 330],
+      "size": [155, 70]
+    },
+    {
+      "id": "ui",
+      "type": "frontend",
+      "label": "App Router UI",
+      "sublabel": "pages + client components",
+      "pos": [250, 330],
+      "size": [175, 70],
+      "sources": [
+        {"path": "app/layout.tsx", "label": "root layout"},
+        {"path": "components/AgentChat.tsx", "label": "agent chat"},
+        {"path": "app/org/page.tsx", "label": "organization view"}
+      ]
+    },
+    {
+      "id": "api",
+      "type": "backend",
+      "label": "Next.js API Routes",
+      "sublabel": "request boundary",
+      "pos": [485, 330],
+      "size": [175, 70],
+      "sources": [
+        {"path": "app/api/agents/route.ts", "label": "agent API"},
+        {"path": "app/api/brain/route.ts", "label": "brain API"},
+        {"path": "app/api/connections/route.ts", "label": "connections API"}
+      ]
+    },
+    {
+      "id": "agentRuntime",
+      "type": "backend",
+      "label": "Agent Runtime",
+      "sublabel": "registry, chat, conductor",
+      "pos": [735, 150],
+      "size": [190, 78],
+      "sources": [
+        {"path": "lib/agents/runtime.ts", "label": "runtime types"},
+        {"path": "lib/agents/real.ts", "label": "runtime registry"},
+        {"path": "lib/agents/conductor.ts", "label": "conductor"}
+      ]
+    },
+    {
+      "id": "connectors",
+      "type": "backend",
+      "label": "Connector Layer",
+      "sublabel": "service adapters",
+      "pos": [735, 330],
+      "size": [190, 78],
+      "sources": [
+        {"path": "lib/connectors/index.ts", "label": "connector registry"},
+        {"path": "lib/connectors/types.ts", "label": "status contract"},
+        {"path": "lib/creds.ts", "label": "credential resolution"}
+      ]
+    },
+    {
+      "id": "repos",
+      "type": "backend",
+      "label": "Repository + Validation",
+      "sublabel": "typed data access",
+      "pos": [735, 515],
+      "size": [190, 78],
+      "sources": [
+        {"path": "lib/db.ts", "label": "repositories"},
+        {"path": "lib/schemas.ts", "label": "Zod schemas"},
+        {"path": "lib/data.ts", "label": "database singleton"}
+      ]
+    },
+    {
+      "id": "llm",
+      "type": "external",
+      "label": "Vercel AI Gateway",
+      "sublabel": "configured model provider",
+      "pos": [1035, 110],
+      "size": [195, 72],
+      "sources": [
+        {"path": "lib/connectors/llm.ts", "label": "model invocation"}
+      ]
+    },
+    {
+      "id": "gbrain",
+      "type": "external",
+      "label": "G-Brain CLI",
+      "sublabel": "doctor + query adapter",
+      "pos": [1035, 250],
+      "size": [195, 72],
+      "sources": [
+        {"path": "lib/connectors/gbrain.ts", "label": "G-Brain adapter"},
+        {"path": "lib/brain.ts", "label": "brain provider"}
+      ]
+    },
+    {
+      "id": "externalServices",
+      "type": "external",
+      "label": "External Services",
+      "sublabel": "email, Slack, CRM, social, payments",
+      "pos": [1035, 390],
+      "size": [230, 78],
+      "sources": [
+        {"path": "lib/connectors/email.ts", "label": "email"},
+        {"path": "lib/connectors/slack.ts", "label": "Slack"},
+        {"path": "lib/connectors/payments.ts", "label": "payments"}
+      ]
+    },
+    {
+      "id": "sqlite",
+      "type": "database",
+      "label": "SQLite",
+      "sublabel": "founder-os.db + WAL",
+      "pos": [1035, 545],
+      "size": [195, 72],
+      "sources": [
+        {"path": "lib/db.ts", "label": "schema and access"},
+        {"path": "lib/seed.ts", "label": "seed data"}
+      ]
+    },
+    {
+      "id": "brainStore",
+      "type": "database",
+      "label": "External Brain Store",
+      "sublabel": "external store",
+      "pos": [1255, 250],
+      "size": [130, 72],
+      "sources": [
+        {"path": "lib/connectors/gbrain.ts", "label": "store access"},
+        {"path": "lib/memory-search.ts", "label": "local search"}
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "FounderOS Next.js Process",
+      "wraps": ["ui", "api", "agentRuntime", "connectors", "repos"]
+    }
+  ],
+  "connections": [
+    {"id": "founder-ui", "from": "founder", "to": "ui", "label": "interacts", "variant": "emphasis"},
+    {"id": "ui-api", "from": "ui", "to": "api", "label": "HTTP / fetch", "variant": "emphasis", "labelAt": [455, 414]},
+    {"id": "api-runtime", "from": "api", "to": "agentRuntime", "label": "run / chat", "variant": "emphasis"},
+    {"id": "api-connectors", "from": "api", "to": "connectors", "label": "connector calls", "labelAt": [805, 438]},
+    {"id": "api-repos", "from": "api", "to": "repos", "label": "validated reads / writes"},
+    {"id": "runtime-llm", "from": "agentRuntime", "to": "llm", "label": "model request", "variant": "dashed"},
+    {"id": "connectors-gbrain", "from": "connectors", "to": "gbrain", "label": "CLI query / status"},
+    {"id": "connectors-services", "from": "connectors", "to": "externalServices", "label": "service APIs / protocols", "labelAt": [980, 482]},
+    {"id": "repos-sqlite", "from": "repos", "to": "sqlite", "label": "SQL"},
+    {"id": "gbrain-store", "from": "gbrain", "to": "brainStore"}
+  ]
+}
